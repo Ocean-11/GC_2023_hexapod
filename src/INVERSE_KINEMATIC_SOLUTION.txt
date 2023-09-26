@@ -1,0 +1,37 @@
+from
+Robot Inverse Kinematics With A Hexapod Leg
+https://www.youtube.com/watch?v=HjmIOKSp7v4&t=1s
+
+
+working on a close enough leg, he mentioned that it all boils down to:
+
+
+void CartesianMove(double X, double Y, double Z){
+// OFFSET TO REST POSITION
+Y += Y_Rest;
+Z += Z_Rest;
+
+// CALCULATE INVERSE KINEMATIC SOLUTION
+double J1 = atan(X / Y) * (180 / PI);
+double H = sqrt((Y * Y) + (X * X));
+double L = sqrt((H * H) + (Z * Z));
+double J3 = acos(   ((J2L * J2L) + (J3L * J3L) - (L * L))   /   (2 * J2L * J3L)   ) * (180 / PI);
+double B = acos(   ((L * L) + (J2L * J2L) - (J3L * J3L))   /   (2 * L * J2L)   ) * (180 / PI);
+double A = atan(Z / H) * (180 / PI);  // BECAUSE Z REST IS NEGATIVE, THIS RETURNS A NEGATIVE VALUE
+double J2 = (B + A);  // BECAUSE 'A' IS NEGATIVE AT REST WE NEED TO INVERT '-' TO '+'
+
+UpdatePosition(J1, J2, J3);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
